@@ -1,0 +1,7 @@
+.idea
+venv
+.venv
+.git
+__pycache__
+.DS_STORE
+cmake-build-debug
