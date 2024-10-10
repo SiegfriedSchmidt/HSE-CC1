@@ -1,9 +1,22 @@
 #include <stdio.h>
 
 #define n 5
-long arr[n][n];
 
-void input_matrix() {
+void input_matrix(long arr[n][n]);
+
+void print_matrix(long arr[n][n]);
+
+void print_matrix_in_order(long arr[n][n]);
+
+int main(void) {
+    long arr[n][n];
+    input_matrix(arr);
+    print_matrix(arr);
+    print_matrix_in_order(arr);
+    return 0;
+}
+
+void input_matrix(long arr[n][n]) {
     printf("Введите матрицу:\n");
     for (long i = 0; i < n; i++) {
         for (long j = 0; j < n; j++) {
@@ -12,7 +25,7 @@ void input_matrix() {
     }
 }
 
-void print_matrix() {
+void print_matrix(long arr[n][n]) {
     printf("Матрица:\n");
     for (long i = 0; i < n; i++) {
         for (long j = 0; j < n; j++) {
@@ -22,7 +35,7 @@ void print_matrix() {
     }
 }
 
-void print_matrix_in_order() {
+void print_matrix_in_order(long arr[n][n]) {
     long i = n - 1, j = n - 1;
     long direction = 0;
     long cnt = 0;
@@ -57,13 +70,6 @@ void print_matrix_in_order() {
 
         ++cnt;
     }
-}
-
-int main(void) {
-    input_matrix();
-    // print_matrix();
-    print_matrix_in_order();
-    return 0;
 }
 
 /*

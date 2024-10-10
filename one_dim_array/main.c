@@ -1,5 +1,31 @@
 #include <stdio.h>
 
+void print_array(long arr[], long n);
+
+long find_minimum(long arr[], long n, long x);
+
+double find_average(long arr[], long n);
+
+int main(void) {
+    long n, x;
+
+    printf("Введите размер массива: ");
+    scanf("%ld", &n);
+
+    printf("Введите элементы массива: ");
+    long arr[n];
+    for (int i = 0; i < n; i++) {
+        scanf("%ld", arr + i);
+    }
+
+    printf("Введите X: ");
+    scanf("%ld", &x);
+
+    printf("Минимум: %ld\n", find_minimum(arr, n, x));
+    printf("Среднее: %lf\n", find_average(arr, n));
+
+    return 0;
+}
 
 void print_array(long arr[], long n) {
     for (int i = 0; i < n; i++) {
@@ -49,25 +75,4 @@ double find_average(long arr[], long n) {
     }
 
     return ((double) sum / (double) (r - l - 1));
-}
-
-int main(void) {
-    long n, x;
-
-    printf("Введите размер массива: ");
-    scanf("%ld", &n);
-
-    printf("Введите элементы массива: ");
-    long arr[n];
-    for (int i = 0; i < n; i++) {
-        scanf("%ld", arr + i);
-    }
-
-    printf("Введите X: ");
-    scanf("%ld", &x);
-
-    printf("Минимум: %ld\n", find_minimum(arr, n, x));
-    printf("Среднее: %lf\n", find_average(arr, n));
-
-    return 0;
 }
