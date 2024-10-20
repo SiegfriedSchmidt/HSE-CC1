@@ -7,22 +7,24 @@ long find_minimum(long arr[], long n, long x);
 double find_average(long arr[], long n);
 
 int main(void) {
-    long n, x;
+    printf("Input array size: ");
 
-    printf("Введите размер массива: ");
+    long n;
     scanf("%ld", &n);
 
-    printf("Введите элементы массива: ");
+    printf("Input array elements: ");
     long arr[n];
     for (int i = 0; i < n; i++) {
         scanf("%ld", arr + i);
     }
 
-    printf("Введите X: ");
+    printf("Input X: ");
+
+    long x;
     scanf("%ld", &x);
 
-    printf("Минимум: %ld\n", find_minimum(arr, n, x));
-    printf("Среднее: %lf\n", find_average(arr, n));
+    printf("Minimum: %ld\n", find_minimum(arr, n, x));
+    printf("Average: %lf\n", find_average(arr, n));
 
     return 0;
 }

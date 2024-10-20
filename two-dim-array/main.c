@@ -17,7 +17,7 @@ int main(void) {
 }
 
 void input_matrix(long arr[n][n]) {
-    printf("Введите матрицу:\n");
+    printf("Input matrix:\n");
     for (long i = 0; i < n; i++) {
         for (long j = 0; j < n; j++) {
             scanf("%ld", &arr[i][j]);
@@ -26,7 +26,7 @@ void input_matrix(long arr[n][n]) {
 }
 
 void print_matrix(long arr[n][n]) {
-    printf("Матрица:\n");
+    printf("Matrix:\n");
     for (long i = 0; i < n; i++) {
         for (long j = 0; j < n; j++) {
             printf("%ld ", arr[i][j]);
