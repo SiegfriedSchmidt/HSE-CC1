@@ -1,39 +1,43 @@
-// https://docs.google.com/document/d/1TJW5jGTlKzkXdzWOiDLqjLShHOv8LqUA/edit
-
 #include <stdio.h>
 #include <stdlib.h>
 
+
+// functions prototypes
 double calculate_sequence_by_precision(double x, double precision);
 
 double calculate_sequence_by_count(double x, long count);
 
 
 int main(void) {
-    // Буфер для ввода строки и указатель на последний неправильный символ
+    // buffer for string
     char str[100];
+
+    // pointer to last incorrect char (for string conversion)
     char *endptr;
 
-    // Объявление x и way
     double x;
     char way;
 
-    // Ввод x
+    // input x
     for (;;) {
-        printf("Введите X: ");
+        printf("Input X: ");
+        // get first 100 bytes (chars) from stdin
         fgets(str, sizeof(str), stdin);
+        // string to double
         x = strtod(str, &endptr);
 
+        // string is not empty and ends with line break
         if (str[0] != '\n' && *endptr == '\n') {
             break;
         }
 
-        printf("Неправильное значение!\n");
+        printf("Incorrect value!\n");
     }
 
 
-    // Ввод way
+    // input way
     for (;;) {
-        printf("Выберите способ расчета (1 или 2): ");
+        printf("Select calculation method (1, 2): ");
         fgets(str, sizeof(str), stdin);
 
         if ((str[0] == '1' || str[0] == '2') && str[1] == '\n') {
@@ -41,17 +45,16 @@ int main(void) {
             break;
         }
 
-        printf("Неправильное значение!\n");
+        printf("Incorrect value!\n");
     }
 
     double result;
     if (way == '1') {
-        // точность
         long chars_after_comma;
 
-        // Ввод precision
+        // input precision
         for (;;) {
-            printf("Введите количество знаков после запятой: ");
+            printf("Input number of decimal places: ");
             fgets(str, sizeof(str), stdin);
             chars_after_comma = strtol(str, &endptr, 10);
 
@@ -59,7 +62,7 @@ int main(void) {
                 break;
             }
 
-            printf("Неправильное значение!\n");
+            printf("Incorrect value!\n");
         }
 
         double precision = 1;
@@ -69,12 +72,12 @@ int main(void) {
 
         result = calculate_sequence_by_precision(x, precision);
     } else {
-        // количество членов ряда
+        // number of members
         long count;
 
-        // Ввод count
+        // input count
         for (;;) {
-            printf("Введите количество членов ряда: ");
+            printf("Input number of members: ");
             fgets(str, sizeof(str), stdin);
             count = strtol(str, &endptr, 10);
 
@@ -82,13 +85,13 @@ int main(void) {
                 break;
             }
 
-            printf("Неправильное значение!\n");
+            printf("Incorrect value!\n");
         }
 
         result = calculate_sequence_by_count(x, count);
     }
 
-    printf("Результат: %0.32lf\n", result);
+    printf("Result: %0.32lf\n", result);
     return 0;
 }
 
@@ -102,26 +105,26 @@ double calculate_next_member(double last_member, double x, int *factorial_number
 
 double calculate_sequence_by_precision(double x, double precision) {
     double last_member = x;
-    double seq = last_member;
+    double seq_sum = last_member;
 
-    int factorial_number = 1; // Число факториала текущего члена последовательности
+    int factorial_number = 1; // number of factorial of current member of sequence
     while (absd(last_member) > precision) {
         last_member = calculate_next_member(last_member, x, &factorial_number);
-        seq += last_member;
+        seq_sum += last_member;
     }
 
-    return seq;
+    return seq_sum;
 }
 
 double calculate_sequence_by_count(double x, long count) {
     double last_member = x;
-    double seq = last_member;
+    double seq_sum = last_member;
 
-    int factorial_number = 1; // Число факториала текущего члена последовательности
+    int factorial_number = 1; // number of factorial of current member of sequence
     for (int i = 0; i < count - 1; i++) {
         last_member = calculate_next_member(last_member, x, &factorial_number);
-        seq += last_member;
+        seq_sum += last_member;
     }
 
-    return seq;
+    return seq_sum;
 }
