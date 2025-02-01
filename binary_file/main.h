@@ -18,4 +18,6 @@ struct Field {
     short int company;
 };
 
+
+
 #endif // MAIN_H
