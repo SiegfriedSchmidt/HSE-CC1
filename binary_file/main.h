@@ -2,7 +2,6 @@
 // 01.02.2025
 #ifndef MAIN_H
 #define MAIN_H
-#include <wchar.h>
 
 struct Date {
     short int day;
@@ -11,10 +10,10 @@ struct Date {
 };
 
 struct Field {
-    wchar_t name[128];
+    char name[128];
     struct Date date;
-    wchar_t rank[32];
-    wchar_t specialty[8];
+    char rank[32];
+    char specialty[10];
     short int company;
 };
 
