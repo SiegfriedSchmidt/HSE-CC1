@@ -1,31 +1,18 @@
-//
-// 01.02.2025
-
 #include <stdio.h>
-#include <stdlib.h>
-
-const char FILE_PATH[100] = "/mnt/d/Users/Matvei/Developer/Projects/HSE-CC1/binary_file/text.txt";
-
-FILE *open_file(char *mode) {
-    FILE *fptr = fopen(FILE_PATH, mode);
-
-    if (fptr == NULL) {
-        printf("Error");
-        exit(0);
-    }
-    return fptr;
-}
+#include <wchar.h>
+#include <locale.h>
+#include <windows.h>
+#include <fcntl.h>
+#include <io.h>
 
 int main() {
-    FILE *fptr = open_file("r+");
-
-    char mystring[99];
-    fgets(mystring, 99, fptr);
-    printf("%s", mystring);
-
-    fprintf(fptr, mystring);
-
-    fclose(fptr);
-
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    setlocale(LC_ALL, "");
+    wchar_t text[100];
+    wprintf(L"%lld", sizeof text);
+    wprintf(L"Введите русский текст: ");
+    fgetws(text, 100, stdin);
+    wprintf(L"Вы ввели: %ls", text);
     return 0;
 }
