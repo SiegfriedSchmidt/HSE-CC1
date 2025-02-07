@@ -7,12 +7,12 @@
 #include <string.h>
 
 #define FILE_PATH "/mnt/d/Users/Matvei/Developer/Projects/HSE-CC1/binary_file/data.bin"
-// #define USE_ARRAY_DATA
+#define USE_ARRAY_DATA
 
 const int FIELD_SIZE = sizeof(struct Field);
 
 void print_table_head() {
-    printf("%-*s%-*s%-*s%-*s%-*s\n", 43, "ФИО", 26, "Дата рождения", 26, "Звание", 11, "ВУС", 9, "Рота");
+    printf("%-*s%-*s%-*s%-*s%-*s%-*s\n", 5, "№", 43, "ФИО", 26, "Дата рождения", 26, "Звание", 11, "ВУС", 9, "Рота");
 }
 
 void print_field_data(const struct Field field) {
@@ -27,10 +27,6 @@ void print_field_data(const struct Field field) {
     printf("%-*d\n", 5, field.company);
 }
 
-void print_field(const struct Field field) {
-    print_table_head();
-    print_field_data(field);
-}
 
 struct Date string_to_date(const char *str_date) {
     struct Date date = {};
@@ -83,37 +79,58 @@ struct Field create_field() {
     scanf("%s", &field.specialty);
     printf("Рота:");
     scanf("%hd", &field.company);
-    while(getchar() != '\n');
+    while (getchar() != '\n')
+        ;
 
     return field;
 }
 
-void write_to_binary_file(const int number_of_fields, const struct Field field[]) {
-    FILE *fptr = fopen(FILE_PATH, "wb+");
+void write_to_file(const int number_of_fields, const struct Field field[]) {
+    FILE *fptr = fopen(FILE_PATH, "ab");
     if (fptr == NULL) {
         printf("Error\n");
         return;
     }
 
-    fwrite(&field, FIELD_SIZE, number_of_fields, fptr);
+    printf("%ld", ftell(fptr));
+    fwrite(field, FIELD_SIZE, number_of_fields, fptr);
     fclose(fptr);
 }
 
-void read_binary_file() {
+void read_file() {
     FILE *fptr = fopen(FILE_PATH, "rb");
     if (fptr == NULL) {
         printf("Error\n");
         return;
     }
 
+    print_table_head();
     rewind(fptr);
+
+    int i = 1;
     while (!feof(fptr)) {
         struct Field field;
         fread(&field, FIELD_SIZE, 1, fptr);
-        if (!feof(fptr))
-            print_field(field);
+        if (!feof(fptr)) {
+            printf("%d. ", i++);
+            print_field_data(field);
+        }
     }
 
+    fclose(fptr);
+}
+
+void delete_from_file(int index) {
+    FILE *fptr = fopen(FILE_PATH, "ab");
+    if (fptr == NULL) {
+        printf("Error\n");
+        return;
+    }
+    fseek(fptr, index * FIELD_SIZE, SEEK_SET);
+
+    struct Field field = {};
+    field.deleted = 1;
+    fwrite(&field, FIELD_SIZE - index, 1, fptr);
     fclose(fptr);
 }
 
@@ -126,7 +143,8 @@ int main() {
 
         int option;
         scanf("%d", &option);
-        while(getchar() != '\n');
+        while (getchar() != '\n')
+            ;
 
         if (option == 0) {
             printf("Exit.");
@@ -135,10 +153,10 @@ int main() {
 
         if (option == 1) {
 #ifdef USE_ARRAY_DATA
-
+            write_to_binary_file(sizeof(Data) / FIELD_SIZE, Data);
 #else
             const struct Field field[1] = {create_field()};
-            write_to_binary_file(1, field);
+            write_to_file(1, field);
 #endif
 
         } else if (option == 2) {
@@ -148,7 +166,7 @@ int main() {
         } else if (option == 4) {
 
         } else if (option == 5) {
-            read_binary_file();
+            read_file();
         } else {
             printf("Undefined option");
         }

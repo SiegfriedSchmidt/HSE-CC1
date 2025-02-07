@@ -15,6 +15,7 @@ struct Field {
     char rank[32];
     char specialty[10];
     short int company;
+    int deleted = 0;
 };
 
 struct Field Data[48] = {{"Ivanov Aleksandr Andreevich", {12, 3, 1991}, "Ryadovoy", "154327F", 2},
