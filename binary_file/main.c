@@ -7,6 +7,7 @@
 #include <string.h>
 
 #define FILE_PATH "/mnt/d/Users/Matvei/Developer/Projects/HSE-CC1/binary_file/data.bin"
+// #define USE_ARRAY_DATA
 
 const int FIELD_SIZE = sizeof(struct Field);
 
@@ -82,18 +83,19 @@ struct Field create_field() {
     scanf("%s", &field.specialty);
     printf("Рота:");
     scanf("%hd", &field.company);
+    while(getchar() != '\n');
 
     return field;
 }
 
-void write_to_binary_file(const struct Field field) {
-    FILE *fptr = fopen(FILE_PATH, "wb");
+void write_to_binary_file(const int number_of_fields, const struct Field field[]) {
+    FILE *fptr = fopen(FILE_PATH, "wb+");
     if (fptr == NULL) {
         printf("Error\n");
         return;
     }
 
-    fwrite(&field, FIELD_SIZE, 1, fptr);
+    fwrite(&field, FIELD_SIZE, number_of_fields, fptr);
     fclose(fptr);
 }
 
@@ -104,7 +106,6 @@ void read_binary_file() {
         return;
     }
 
-    printf("File content:\n");
     rewind(fptr);
     while (!feof(fptr)) {
         struct Field field;
@@ -117,12 +118,43 @@ void read_binary_file() {
 }
 
 int main() {
-    // struct Field field = {"Иванов Иван Иваночик", {1, 1, 2030}, "genera", "999000A", 9};
-    struct Field field = create_field();
+    for (;;) {
+        printf("Choose option (1..5):\n0.exit\n1.добавление записи в файл\n2.удаление заданной записи из файла по "
+               "порядковому "
+               "номеру записи\n3.поиск записей по заданному пользователем (любому) полю структуры\n4.редактирование "
+               "(изменение) заданной записи\n5.вывод на экран содержимого файла в табличном виде\nOption:");
 
-    print_field(field);
-    write_to_binary_file(field);
-    read_binary_file(field);
+        int option;
+        scanf("%d", &option);
+        while(getchar() != '\n');
+
+        if (option == 0) {
+            printf("Exit.");
+            break;
+        }
+
+        if (option == 1) {
+#ifdef USE_ARRAY_DATA
+
+#else
+            const struct Field field[1] = {create_field()};
+            write_to_binary_file(1, field);
+#endif
+
+        } else if (option == 2) {
+
+        } else if (option == 3) {
+
+        } else if (option == 4) {
+
+        } else if (option == 5) {
+            read_binary_file();
+        } else {
+            printf("Undefined option");
+        }
+        printf("\n\n");
+    }
+
 
     return 0;
 }
