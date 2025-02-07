@@ -11,6 +11,11 @@
 
 const int FIELD_SIZE = sizeof(struct Field);
 
+void clear_buffer() {
+    while (getchar() != '\n')
+        ;
+}
+
 void print_table_head() {
     printf("%-*s%-*s%-*s%-*s%-*s%-*s\n", 5, "№", 43, "ФИО", 26, "Дата рождения", 26, "Звание", 11, "ВУС", 9, "Рота");
 }
@@ -62,6 +67,7 @@ struct Date string_to_date(const char *str_date) {
 
 struct Field create_field() {
     struct Field field = {};
+
     printf("Добавьте запись\n");
 
     printf("ФИО:");
@@ -79,8 +85,7 @@ struct Field create_field() {
     scanf("%s", &field.specialty);
     printf("Рота:");
     scanf("%hd", &field.company);
-    while (getchar() != '\n')
-        ;
+    clear_buffer();
 
     return field;
 }
@@ -112,25 +117,27 @@ void read_file() {
         struct Field field;
         fread(&field, FIELD_SIZE, 1, fptr);
         if (!feof(fptr)) {
-            printf("%d. ", i++);
-            print_field_data(field);
+            if (!field.deleted) {
+                printf("%d. ", i++);
+                print_field_data(field);
+            }
         }
     }
 
     fclose(fptr);
 }
 
-void delete_from_file(int index) {
+void delete_from_file(const int index) {
     FILE *fptr = fopen(FILE_PATH, "ab");
     if (fptr == NULL) {
         printf("Error\n");
         return;
     }
     fseek(fptr, index * FIELD_SIZE, SEEK_SET);
+    printf("%ld", ftell(fptr));
 
-    struct Field field = {};
-    field.deleted = 1;
-    fwrite(&field, FIELD_SIZE - index, 1, fptr);
+    struct Field field = {"---------------", {13, 6, 1994}, "Serzhant", "912345W", 3, 0};
+    fwrite(&field, FIELD_SIZE, 1, fptr);
     fclose(fptr);
 }
 
@@ -143,8 +150,7 @@ int main() {
 
         int option;
         scanf("%d", &option);
-        while (getchar() != '\n')
-            ;
+        clear_buffer();
 
         if (option == 0) {
             printf("Exit.");
@@ -153,14 +159,17 @@ int main() {
 
         if (option == 1) {
 #ifdef USE_ARRAY_DATA
-            write_to_binary_file(sizeof(Data) / FIELD_SIZE, Data);
+            write_to_file(sizeof(Data) / FIELD_SIZE, Data);
 #else
             const struct Field field[1] = {create_field()};
             write_to_file(1, field);
 #endif
-
         } else if (option == 2) {
-
+            printf("Input index: ");
+            int index;
+            scanf("%d", &index);
+            clear_buffer();
+            delete_from_file(index);
         } else if (option == 3) {
 
         } else if (option == 4) {
