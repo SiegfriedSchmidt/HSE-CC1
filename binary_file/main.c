@@ -7,7 +7,7 @@
 #include <string.h>
 
 #define FILE_PATH "/mnt/d/Users/Matvei/Developer/Projects/HSE-CC1/binary_file/data.bin"
-#define USE_ARRAY_DATA
+// #define USE_ARRAY_DATA
 
 const int RECORD_SIZE = sizeof(struct Record);
 typedef int (*search_func)(const struct Record *, const struct Record *);
@@ -96,7 +96,6 @@ void read_company(struct Record *record) {
 
 struct Record create_record() {
     struct Record record = {};
-    printf("Добавьте запись\n");
     read_name(&record);
     read_date(&record);
     read_rank(&record);
@@ -114,7 +113,6 @@ void write_to_file(const int number_of_records, const struct Record record[]) {
         return;
     }
 
-    printf("%ld", ftell(fptr));
     fwrite(record, RECORD_SIZE, number_of_records, fptr);
     fclose(fptr);
 }
@@ -243,6 +241,7 @@ int main() {
             write_to_file(sizeof(Data) / RECORD_SIZE, Data);
 #else
             const struct Record record[1] = {create_record()};
+            printf("Добавьте запись\n");
             write_to_file(1, record);
 #endif
         } else if (option == 2) {
