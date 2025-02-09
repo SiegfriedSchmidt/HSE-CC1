@@ -9,7 +9,7 @@ struct Date {
     short int year;
 };
 
-struct Field {
+struct Record {
     char name[128];
     struct Date date;
     char rank[32];
@@ -18,7 +18,7 @@ struct Field {
     int deleted;
 };
 
-struct Field Data[48] = {{"Ivanov Aleksandr Andreevich", {12, 3, 1991}, "Ryadovoy", "154327F", 2},
+struct Record Data[48] = {{"Ivanov Aleksandr Andreevich", {12, 3, 1991}, "Ryadovoy", "154327F", 2},
                          {"Petrov Dmitriy Sergeevich", {5, 7, 1988}, "Efreytor", "289143G", 4},
                          {"Sidorov Mikhail Vladimirovich", {19, 11, 1995}, "Serzhant", "376512H", 1},
                          {"Kozlova Anna Nikolaevna", {28, 2, 1993}, "Leytenant", "498765J", 3},
