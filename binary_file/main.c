@@ -126,31 +126,36 @@ void read_file() {
     fclose(fptr);
 }
 
-void search_recptd() {
-
+int search_record(const int index) {
+    FILE *fptr = fopen(FILE_PATH, "r");
+    struct Record record;
+    int file_index = 0;
+    int search_index = 0;
+    while (fread(&record, RECORD_SIZE, 1, fptr)) {
+        if (!record.deleted) {
+            ++file_index;
+        }
+        if (file_index == index) {
+            break;
+        }
+        ++search_index;
+    }
+    fclose(fptr);
+    return search_index;
 }
 
 void modify_record(const int index, const struct Record modified_record) {
     FILE *fptr = fopen(FILE_PATH, "r+b");
 
-    struct Record record;
-    // while (fread(&record, RECORD_SIZE, 1, file)) {
-    //     if (record.id == idToModify) {
-    //         // Modify the record
-    //         strcpy(record.name, newName);
-    //         fseek(file, -RECORD_SIZE, SEEK_CUR); // Move back to the start of the record
-    //         fwrite(&record, RECORD_SIZE, 1, file); // Write the modified record
-    //         break;
-    //     }
-    // }
-
     if (fptr == NULL) {
         printf("Error\n");
         return;
     }
-    fseek(fptr, (index - 1) * RECORD_SIZE, SEEK_SET);
+
+    int file_index = search_record(index);
+    fseek(fptr, file_index * RECORD_SIZE, SEEK_SET);
     printf("%ld", ftell(fptr));
-    fwrite(&record, RECORD_SIZE, 1, fptr);
+    fwrite(&modified_record, RECORD_SIZE, 1, fptr);
     fclose(fptr);
 }
 
