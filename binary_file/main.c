@@ -162,7 +162,7 @@ int search_record_by_index(const int index) {
     return search_index;
 }
 
-int search_record_by_field(const struct Record search_record, const search_func *search) {
+void search_record_by_field(const struct Record search_record, const search_func *search) {
     FILE *fptr = fopen(FILE_PATH, "r");
     int file_index = 0;
     int search_index = 0;
@@ -178,7 +178,6 @@ int search_record_by_field(const struct Record search_record, const search_func 
         ++search_index;
     }
     fclose(fptr);
-    return search_index;
 }
 
 int search_name(const struct Record *cur_record, const struct Record *search_record) {
@@ -208,7 +207,6 @@ void modify_record(const int index, const struct Record modified_record) {
 
     int file_index = search_record_by_index(index);
     fseek(fptr, file_index * RECORD_SIZE, SEEK_SET);
-    printf("%ld", ftell(fptr));
     fwrite(&modified_record, RECORD_SIZE, 1, fptr);
     fclose(fptr);
 }
@@ -263,9 +261,14 @@ int main() {
             struct Record record = {};
             (*reading[search_option])(&record);
             print_table_head();
-            int index = search_record_by_field(record, &searching[search_option]);
+            search_record_by_field(record, &searching[search_option]);
         } else if (option == 4) {
-
+            printf("Input index: ");
+            int index;
+            scanf("%d", &index);
+            clear_buffer();
+            const struct Record record = create_record();
+            modify_record(index, record);
         } else if (option == 5) {
             read_file();
         } else {
