@@ -10,6 +10,8 @@
 #define USE_ARRAY_DATA
 
 const int RECORD_SIZE = sizeof(struct Record);
+typedef int (*search_func)(const struct Record *, const struct Record *);
+typedef int (*read_func)(const struct Record *);
 
 void clear_buffer() {
     while (getchar() != '\n')
@@ -64,26 +66,42 @@ struct Date string_to_date(const char *str_date) {
     return date;
 }
 
-struct Record create_record() {
-    struct Record record = {};
-
-    printf("Добавьте запись\n");
-
+void read_name(struct Record *record) {
     printf("ФИО:");
-    fgets(record.name, sizeof(record.name), stdin);
-    record.name[strlen(record.name) - 1] = '\0';
+    fgets(record->name, sizeof(record->name), stdin);
+    record->name[strlen(record->name) - 1] = '\0';
+}
 
+void read_date(struct Record *record) {
     printf("Дата рождения:");
     char str_date[12];
     scanf("%s", &str_date);
-    record.date = string_to_date(str_date);
+    record->date = string_to_date(str_date);
+}
 
+void read_rank(struct Record *record) {
     printf("Звание:");
-    scanf("%s", &record.rank);
+    scanf("%s", &record->rank);
+}
+
+void read_specialty(struct Record *record) {
     printf("ВУС:");
-    scanf("%s", &record.specialty);
+    scanf("%s", &record->specialty);
+}
+
+void read_company(struct Record *record) {
     printf("Рота:");
-    scanf("%hd", &record.company);
+    scanf("%hd", &record->company);
+}
+
+struct Record create_record() {
+    struct Record record = {};
+    printf("Добавьте запись\n");
+    read_name(&record);
+    read_date(&record);
+    read_rank(&record);
+    read_specialty(&record);
+    read_company(&record);
     clear_buffer();
 
     return record;
@@ -126,7 +144,7 @@ void read_file() {
     fclose(fptr);
 }
 
-int search_record(const int index) {
+int search_record_by_index(const int index) {
     FILE *fptr = fopen(FILE_PATH, "r");
     struct Record record;
     int file_index = 0;
@@ -144,6 +162,42 @@ int search_record(const int index) {
     return search_index;
 }
 
+int search_record_by_field(const struct Record search_record, const search_func *search) {
+    FILE *fptr = fopen(FILE_PATH, "r");
+    int file_index = 0;
+    int search_index = 0;
+    struct Record record;
+    while (fread(&record, RECORD_SIZE, 1, fptr)) {
+        if (!record.deleted) {
+            ++file_index;
+        }
+        if ((*search)(&record, &search_record)) {
+            printf("%d. ", file_index);
+            print_record_data(record);
+        }
+        ++search_index;
+    }
+    fclose(fptr);
+    return search_index;
+}
+
+int search_name(const struct Record *cur_record, const struct Record *search_record) {
+    return strcmp(cur_record->name, search_record->name) == 0;
+}
+int search_date(const struct Record *cur_record, const struct Record *search_record) {
+    return cur_record->date.day == search_record->date.day && cur_record->date.month == search_record->date.month &&
+        cur_record->date.year == search_record->date.year;
+}
+int search_rank(const struct Record *cur_record, const struct Record *search_record) {
+    return strcmp(cur_record->rank, search_record->rank) == 0;
+}
+int search_specialty(const struct Record *cur_record, const struct Record *search_record) {
+    return strcmp(cur_record->specialty, search_record->specialty) == 0;
+}
+int search_company(const struct Record *cur_record, const struct Record *search_record) {
+    return cur_record->company == search_record->company;
+}
+
 void modify_record(const int index, const struct Record modified_record) {
     FILE *fptr = fopen(FILE_PATH, "r+b");
 
@@ -152,7 +206,7 @@ void modify_record(const int index, const struct Record modified_record) {
         return;
     }
 
-    int file_index = search_record(index);
+    int file_index = search_record_by_index(index);
     fseek(fptr, file_index * RECORD_SIZE, SEEK_SET);
     printf("%ld", ftell(fptr));
     fwrite(&modified_record, RECORD_SIZE, 1, fptr);
@@ -165,6 +219,9 @@ void delete_from_file(const int index) {
 }
 
 int main() {
+    const search_func searching[5] = {search_name, search_date, search_rank, search_specialty, search_company};
+    const read_func reading[5] = {read_name, read_date, read_rank, read_specialty, read_company};
+
     for (;;) {
         printf("Choose option (1..5):\n0.exit\n1.добавление записи в "
                "файл\n2.удаление заданной записи из файла по "
@@ -197,7 +254,18 @@ int main() {
             clear_buffer();
             delete_from_file(index);
         } else if (option == 3) {
+            printf("Поиск по (1..5):\n1.ФИО\n2.Дата\n3.Звание\n4.ВУС\n5.Номер роты\n");
+            int search_option;
+            scanf("%d", &search_option);
+            clear_buffer();
+            --search_option;
+
+            struct Record record = {};
+            (*reading[search_option])(&record);
+            print_table_head();
+            int index = search_record_by_field(record, &searching[search_option]);
         } else if (option == 4) {
+
         } else if (option == 5) {
             read_file();
         } else {
