@@ -29,11 +29,6 @@ int main(void) {
 
         unsigned int len = strlen(word);
 
-        // if (word[len - 1] == '.') {
-        //     word[len - 1] = '\0';
-        //     --len;
-        // }
-
         if (len % 2 == 0) {
             for (int i = 0; i <= len; ++i) {
                 words[n_words][i] = word[i];

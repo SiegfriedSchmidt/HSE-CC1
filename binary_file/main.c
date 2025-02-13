@@ -6,23 +6,29 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define FILE_PATH "/mnt/d/Users/Matvei/Developer/Projects/HSE-CC1/binary_file/data.bin"
-// #define USE_ARRAY_DATA
+// #define FILE_PATH "/mnt/d/Users/Matvei/Developer/Projects/HSE-CC1/binary_file/data.bin"
+#define FILE_PATH "/Users/matvei/Developer/Projects/HSE-CC1/binary_file/data.bin"
+#define USE_ARRAY_DATA
 
 const int RECORD_SIZE = sizeof(struct Record);
+
 typedef int (*search_func)(const struct Record *, const struct Record *);
-typedef int (*read_func)(const struct Record *);
+
+typedef void (*read_func)(struct Record *);
 
 void clear_buffer() {
-    while (getchar() != '\n')
-        ;
+    while (getchar() != '\n');
 }
 
 void print_table_head() {
-    printf("%-*s%-*s%-*s%-*s%-*s%-*s\n", 5, "№", 43, "ФИО", 26, "Дата рождения", 26, "Звание", 11, "ВУС", 9, "Рота");
+    printf("%-*s%-*s%-*s%-*s%-*s%-*s\n", 6, "№", 43, "ФИО", 26, "Дата рождения", 26, "Звание", 11, "ВУС", 9, "Рота");
 }
 
-void print_record_data(const struct Record record) {
+void print_record_data(const struct Record record, const int index) {
+    char str_index[10];
+    sprintf(str_index, "%d.", index);
+    printf("%-*s", 4, str_index);
+
     printf("%-*s", 40, record.name);
 
     char str_date[12];
@@ -133,8 +139,7 @@ void read_file() {
         fread(&record, RECORD_SIZE, 1, fptr);
         if (!feof(fptr)) {
             if (!record.deleted) {
-                printf("%d. ", i++);
-                print_record_data(record);
+                print_record_data(record, i++);
             }
         }
     }
@@ -170,8 +175,7 @@ void search_record_by_field(const struct Record search_record, const search_func
             ++file_index;
         }
         if ((*search)(&record, &search_record)) {
-            printf("%d. ", file_index);
-            print_record_data(record);
+            print_record_data(record, file_index);
         }
         ++search_index;
     }
@@ -181,16 +185,20 @@ void search_record_by_field(const struct Record search_record, const search_func
 int search_name(const struct Record *cur_record, const struct Record *search_record) {
     return strcmp(cur_record->name, search_record->name) == 0;
 }
+
 int search_date(const struct Record *cur_record, const struct Record *search_record) {
     return cur_record->date.day == search_record->date.day && cur_record->date.month == search_record->date.month &&
-        cur_record->date.year == search_record->date.year;
+           cur_record->date.year == search_record->date.year;
 }
+
 int search_rank(const struct Record *cur_record, const struct Record *search_record) {
     return strcmp(cur_record->rank, search_record->rank) == 0;
 }
+
 int search_specialty(const struct Record *cur_record, const struct Record *search_record) {
     return strcmp(cur_record->specialty, search_record->specialty) == 0;
 }
+
 int search_company(const struct Record *cur_record, const struct Record *search_record) {
     return cur_record->company == search_record->company;
 }
@@ -220,12 +228,12 @@ int main() {
 
     for (;;) {
         printf("Choose option (1..5):\n0.exit\n1.добавление записи в "
-               "файл\n2.удаление заданной записи из файла по "
-               "порядковому "
-               "номеру записи\n3.поиск записей по заданному пользователем (любому) "
-               "полю структуры\n4.редактирование "
-               "(изменение) заданной записи\n5.вывод на экран содержимого файла в "
-               "табличном виде\nOption:");
+            "файл\n2.удаление заданной записи из файла по "
+            "порядковому "
+            "номеру записи\n3.поиск записей по заданному пользователем (любому) "
+            "полю структуры\n4.редактирование "
+            "(изменение) заданной записи\n5.вывод на экран содержимого файла в "
+            "табличном виде\nOption:");
 
         int option;
         scanf("%d", &option);
