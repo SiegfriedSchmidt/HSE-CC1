@@ -6,5 +6,5 @@ __pycache__
 .DS_STORE
 cmake-build-debug
 ExamModule2
-data.bin
+*.bin
 .clang-format
