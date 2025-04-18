@@ -5,5 +5,5 @@
 #define MERGE_H
 #include "../record.h"
 
-void merge_sort(struct Record array[], long array_size, int descending);
+void merge_sort(struct Record array[], cmp_type cmp, long l, long r);
 #endif //MERGE_H

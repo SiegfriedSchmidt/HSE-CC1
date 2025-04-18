@@ -48,7 +48,7 @@ const char *specialties[] = {
     "Ryadovoy", "Efreytor", "Serzhant", "Leytenant", "Kapitan", "Mayor", "Polkovnik"
 };
 
-int cmp(const struct Record *lhs, const struct Record *rhs) {
+int cmp_ascending(const struct Record *lhs, const struct Record *rhs) {
     int string_comp = strcmp(lhs->name, rhs->name);
     if (string_comp > 0) return 1;
     if (string_comp < 0) return 0;
@@ -72,4 +72,9 @@ int cmp(const struct Record *lhs, const struct Record *rhs) {
 
     if (lhs->company > rhs->company) return 1;
     return 0;
+}
+
+int cmp_descending(const struct Record *lhs, const struct Record *rhs) {
+    if (cmp_ascending(lhs, rhs) == 1) return 0;
+    return 1;
 }

@@ -23,6 +23,10 @@ extern const char *middle_names[48];
 extern const char *last_names[48];
 extern const char *specialties[7];
 
-int cmp(const struct Record *lhs, const struct Record *rhs);
+typedef int (*cmp_type)(const struct Record *, const struct Record *);
+
+int cmp_ascending(const struct Record *lhs, const struct Record *rhs);
+
+int cmp_descending(const struct Record *lhs, const struct Record *rhs);
 
 #endif //RECORD_H
