@@ -4,4 +4,10 @@
 #ifndef TIME_MEASURE_H
 #define TIME_MEASURE_H
 
+struct Result {
+    char *name;
+    double time;
+};
+
+void time_measure(struct Result results[]);
 #endif //TIME_MEASURE_H

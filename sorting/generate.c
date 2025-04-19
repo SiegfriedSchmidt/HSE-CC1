@@ -14,7 +14,7 @@ struct Record generate_record() {
     record.date.month = random_range(1, 12);
     record.date.year = random_range(1970, 2025);
 
-    sprintf(record.specialty, "%d", random_range(100000, 999999));
+    sprintf(record.specialty, "%ld", random_range(100000, 999999));
     record.specialty[6] = 'A' + random_range(0, 10);
     record.specialty[7] = '\0';
 
