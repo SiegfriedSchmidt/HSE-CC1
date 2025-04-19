@@ -5,7 +5,8 @@
 #define TIME_MEASURE_H
 
 struct Result {
-    char *name;
+    char name[64];
+    long size;
     double time;
 };
 

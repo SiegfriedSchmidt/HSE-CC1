@@ -31,8 +31,9 @@ void time_measure(struct Result results[]) {
             const clock_t end = clock();
             const double seconds = (double) (end - start) / CLOCKS_PER_SEC;
 
-            strcpy(results[option * SIZES_LEN + option].name, options[option].name);
-            results[option * SIZES_LEN + option].time = seconds;
+            strcpy(results[option * SIZES_LEN + size_idx].name, options[option].name);
+            results[option * SIZES_LEN + size_idx].size = size;
+            results[option * SIZES_LEN + size_idx].time = seconds;
 
             free(records);
         }
