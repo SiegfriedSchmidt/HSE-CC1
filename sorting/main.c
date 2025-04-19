@@ -4,6 +4,7 @@
 #include <time.h>
 
 #include "display.h"
+#include "sorts/heap_sort.h"
 #include "sorts/merge_sort.h"
 #include "sorts/quick_sort.h"
 
@@ -17,7 +18,7 @@ int main(void) {
     for (int i = 0; i < size; ++i) {
         records[i] = generate_record();
     }
-    quick_sort(records, cmp_descending, 0, size);
+    heap_sort(records, cmp_descending, 0, size);
     print_table_head();
     for (int i = 0; i < size; ++i) {
         print_record_data(records[i], i);
