@@ -22,3 +22,6 @@ F. Быстрая
 G. Пирамидальная
 
 ![My task](./task.png "task")
+
+## Результаты
+![Results](./results.png "results")
