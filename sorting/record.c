@@ -78,3 +78,9 @@ int cmp_descending(const struct Record *lhs, const struct Record *rhs) {
     if (cmp_ascending(lhs, rhs) == 1) return 0;
     return 1;
 }
+
+void swap(struct Record *a, struct Record *b) {
+    const struct Record tmp = *a;
+    *a = *b;
+    *b = tmp;
+}

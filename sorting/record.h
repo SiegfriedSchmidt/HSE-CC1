@@ -29,4 +29,6 @@ int cmp_ascending(const struct Record *lhs, const struct Record *rhs);
 
 int cmp_descending(const struct Record *lhs, const struct Record *rhs);
 
+void swap(struct Record *a, struct Record *b);
+
 #endif //RECORD_H

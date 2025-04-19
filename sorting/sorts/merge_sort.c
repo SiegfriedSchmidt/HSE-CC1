@@ -27,7 +27,7 @@ void merge_sort(struct Record array[], const cmp_type cmp, const long l, const l
             ++i3;
         }
     }
-    for (int i = 0; i < r - l; ++i) {
+    for (long i = 0; i < r - l; ++i) {
         array[l + i] = tmp[i];
     }
     free(tmp);

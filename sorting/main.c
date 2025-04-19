@@ -5,6 +5,7 @@
 
 #include "display.h"
 #include "sorts/merge_sort.h"
+#include "sorts/quick_sort.h"
 
 
 int main(void) {
@@ -16,7 +17,7 @@ int main(void) {
     for (int i = 0; i < size; ++i) {
         records[i] = generate_record();
     }
-    merge_sort(records, cmp_descending, 0, size);
+    quick_sort(records, cmp_descending, 0, size);
     print_table_head();
     for (int i = 0; i < size; ++i) {
         print_record_data(records[i], i);

@@ -5,5 +5,5 @@
 #define QUICK_H
 #include "../record.h"
 
-void quick_sort(struct Record array[]);
+void quick_sort(struct Record array[], cmp_type cmp, long l, long r);
 #endif //QUICK_H
