@@ -1,0 +1,7 @@
+//  
+// 20.04.2025
+
+#ifndef SINGLY_LINKED_LIST_H
+#define SINGLY_LINKED_LIST_H
+
+#endif //SINGLY_LINKED_LIST_H

@@ -8,3 +8,4 @@
 5. [string_processing](string_processing)
 6. [binary_file](binary_file)
 7. [sorting](sorting)
+8. [linked_lists](linked_lists)

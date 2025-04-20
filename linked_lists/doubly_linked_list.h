@@ -1,0 +1,7 @@
+//  
+// 20.04.2025
+
+#ifndef DOUBLY_LINKED_LIST_H
+#define DOUBLY_LINKED_LIST_H
+
+#endif //DOUBLY_LINKED_LIST_H
