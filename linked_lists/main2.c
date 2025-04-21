@@ -2,6 +2,7 @@
 // 20.04.2025
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "doubly_linked_list.h"
@@ -12,6 +13,9 @@ int main(void) {
     unsigned long len = strlen(string);
     if (string[len - 2] == '.') {
         string[len - 2] = '\0';
+    } else {
+        fprintf(stderr, "Dot not exist!");
+        exit(139);
     }
     len = len - 2;
 
@@ -30,6 +34,8 @@ int main(void) {
     }
 
     print_list(string_list);
-
+    delete_word(string_list);
+    print_list(string_list);
+    free_list(string_list);
     return 0;
 }
