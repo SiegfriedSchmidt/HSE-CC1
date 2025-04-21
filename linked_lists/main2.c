@@ -14,13 +14,13 @@ int main(void) {
     if (string[len - 2] == '.') {
         string[len - 2] = '\0';
     } else {
-        fprintf(stderr, "Dot not exist!");
-        exit(139);
+        fprintf(stderr, "Dot is not specified!");
+        exit(0);
     }
     len = len - 2;
 
-    StringNode* string_list = create_node(NULL);
-    StringNode* head = string_list;
+    StringNode *string_list = create_node(NULL);
+    StringNode *head = string_list;
     for (long i = 0; i < len; ++i) {
         long idx = 0;
         while (i < len && string[i] != ' ') {
