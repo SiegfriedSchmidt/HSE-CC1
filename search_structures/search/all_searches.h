@@ -12,7 +12,7 @@ typedef Record (*search_type)(Record array[]);
 
 struct SearchType {
     search_type search;
-    char *name;
+    char* name;
 };
 
 const struct SearchType options[] = {
