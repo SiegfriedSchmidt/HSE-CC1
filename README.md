@@ -9,3 +9,4 @@
 6. [binary_file](binary_file)
 7. [sorting](sorting)
 8. [linked_lists](linked_lists)
+9. [search_structures](search_structures)
