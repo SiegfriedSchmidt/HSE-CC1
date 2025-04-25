@@ -1,24 +1,22 @@
 // 
-// 24.04.2025
+// 25.04.2025
 
 #ifndef ALL_SEARCHES_H
 #define ALL_SEARCHES_H
-#include "linear_search.h"
-#include "binary_search.h"
-#include "red_black_search.h"
+
 #include "../record.h"
 
-typedef Record (*search_type)(Record array[]);
+typedef struct PreparedData {
+    long size;
+    Record *records;
+    Record *sorted_records;
+} PreparedData;
 
-struct SearchType {
-    search_type search;
-    char* name;
-};
+PreparedData generate_prepared_data(long);
 
-const struct SearchType options[] = {
-    {linear_search, "linear_search"},
-    {binary_search, "binary_search"},
-    {red_black_search, "red_black_search"}
-};
+Record search(PreparedData, char *, long);
 
+void free_prepared_data(PreparedData);
+
+extern const char *options[3];
 #endif //ALL_SEARCHES_H

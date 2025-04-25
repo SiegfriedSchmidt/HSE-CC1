@@ -25,9 +25,9 @@ extern const char *specialties[7];
 
 typedef int (*cmp_type)(const Record *, const Record *);
 
-int cmp_ascending(const Record *lhs, const Record *rhs);
+int cmp_ascending(const void *lhs_void, const void *rhs_void);
 
-int cmp_descending(const Record *lhs, const Record *rhs);
+int cmp_descending(const void *lhs_void, const void *rhs_void);
 
 void swap(Record *a, Record *b);
 

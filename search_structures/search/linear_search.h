@@ -5,5 +5,5 @@
 #define LINEAR_SEARCH_H
 #include "../record.h"
 
-Record linear_search(Record array[]);
+Record linear_search(Record [], char *, long);
 #endif //LINEAR_SEARCH_H

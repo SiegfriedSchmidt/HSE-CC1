@@ -19,7 +19,9 @@ set(SOURCE_FILES
         search/binary_search.h
         search/red_black_search.c
         search/red_black_search.h
-        search/all_searches.h)
+        search/all_searches.c
+        search/all_searches.h
+)
 
 set(CMAKE_SHARED_LIBRARY_SUFFIX .so)
 set(CMAKE_SHARED_LIBRARY_PREFIX)

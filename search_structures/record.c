@@ -48,35 +48,41 @@ const char *specialties[] = {
     "Ryadovoy", "Efreytor", "Serzhant", "Leytenant", "Kapitan", "Mayor", "Polkovnik"
 };
 
-int cmp_ascending(const Record *lhs, const Record *rhs) {
+int cmp_ascending(const void *lhs_void, const void *rhs_void) {
+    const Record *lhs = (Record *) lhs_void;
+    const Record *rhs = (Record *) rhs_void;
+
     int string_comp = strcmp(lhs->name, rhs->name);
     if (string_comp > 0) return 1;
-    if (string_comp < 0) return 0;
+    if (string_comp < 0) return -1;
 
     if (lhs->date.year > rhs->date.year) return 1;
-    if (lhs->date.year < rhs->date.year) return 0;
+    if (lhs->date.year < rhs->date.year) return -1;
 
     if (lhs->date.month > rhs->date.month) return 1;
-    if (lhs->date.month < rhs->date.month) return 0;
+    if (lhs->date.month < rhs->date.month) return -1;
 
     if (lhs->date.day > rhs->date.day) return 1;
-    if (lhs->date.day < rhs->date.day) return 0;
+    if (lhs->date.day < rhs->date.day) return -1;
 
     string_comp = strcmp(lhs->rank, rhs->rank);
     if (string_comp > 0) return 1;
-    if (string_comp < 0) return 0;
+    if (string_comp < 0) return -1;
 
     string_comp = strcmp(lhs->specialty, rhs->specialty);
     if (string_comp > 0) return 1;
-    if (string_comp < 0) return 0;
+    if (string_comp < 0) return -1;
 
     if (lhs->company > rhs->company) return 1;
+    if (lhs->company < rhs->company) return -1;
     return 0;
 }
 
-int cmp_descending(const Record *lhs, const Record *rhs) {
-    if (cmp_ascending(lhs, rhs) == 1) return 0;
-    return 1;
+int cmp_descending(const void *lhs_void, const void *rhs_void) {
+    const Record *lhs = (Record *) lhs_void;
+    const Record *rhs = (Record *) rhs_void;
+
+    return -cmp_ascending(lhs, rhs);
 }
 
 void swap(Record *a, Record *b) {

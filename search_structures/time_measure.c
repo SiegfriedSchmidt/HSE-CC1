@@ -7,7 +7,6 @@
 #include <string.h>
 #include <time.h>
 
-#include "generate.h"
 #include "search/all_searches.h"
 
 #define SIZES_LEN 7
@@ -19,23 +18,20 @@ void time_measure(Result results[]) {
     srand(time(NULL));
 
     for (int size_idx = 0; size_idx < SIZES_LEN; ++size_idx) {
-        const long size = sizes[size_idx];
+        const PreparedData prepared_data = generate_prepared_data(sizes[size_idx]);
 
         for (int option = 0; option < OPTIONS_LEN; ++option) {
-            Record *records = malloc(sizeof(Record) * size);
-            for (int record_idx = 0; record_idx < size; ++record_idx) {
-                records[record_idx] = generate_record();
-            }
+            char *key = "123";
+
             const clock_t start = clock();
-            options[option].search(records);
+            search(prepared_data, key, option);
             const clock_t end = clock();
             const double seconds = (double) (end - start) / CLOCKS_PER_SEC;
 
-            strcpy(results[option * SIZES_LEN + size_idx].name, options[option].name);
-            results[option * SIZES_LEN + size_idx].size = size;
+            strcpy(results[option * SIZES_LEN + size_idx].name, options[option]);
+            results[option * SIZES_LEN + size_idx].size = prepared_data.size;
             results[option * SIZES_LEN + size_idx].time = seconds;
-
-            free(records);
         }
+        free_prepared_data(prepared_data);
     }
 }

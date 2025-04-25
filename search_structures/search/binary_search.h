@@ -5,5 +5,5 @@
 #define BINARY_SEARCH_H
 #include "../record.h"
 
-Record binary_search(Record array[]);
+Record binary_search(Record [], char *, long);
 #endif //BINARY_SEARCH_H

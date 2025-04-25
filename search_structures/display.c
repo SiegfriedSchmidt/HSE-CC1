@@ -3,6 +3,8 @@
 
 #include "display.h"
 #include <stdio.h>
+#include <string.h>
+
 #include "record.h"
 
 void print_table_head() {
@@ -10,9 +12,16 @@ void print_table_head() {
 }
 
 void print_record_data(const Record *record, const int index) {
-    char str_index[10];
-    sprintf(str_index, "%d.", index);
-    printf("%-*s", 10, str_index);
+    if (strcmp(record->name, "") == 0) {
+        printf("Key not found!\n");
+        return;
+    }
+
+    if (index != -1) {
+        char str_index[10];
+        sprintf(str_index, "%d.", index);
+        printf("%-*s", 10, str_index);
+    }
 
     printf("%-*s", 40, record->name);
 

@@ -1,7 +1,6 @@
 #include <stdio.h>
-#include "generate.h"
 #include <stdlib.h>
-#include <time.h>
+#include <string.h>
 
 #include "display.h"
 #include "search/all_searches.h"
@@ -10,31 +9,28 @@ int main(void) {
     // srand(time(NULL));
     srand(3);
 
-    printf("1 - linear_search\n2 - binary_search\n3 - red_black_search\nChoose search algorithm: ");
+    const long size = 50;
+    PreparedData prepared_data = generate_prepared_data(size);
+    print_table_head();
+    for (int i = 0; i < size; ++i) {
+        print_record_data(&prepared_data.records[i], i);
+    }
+
+    printf("\n1 - linear_search\n2 - binary_search\n3 - red_black_search\nChoose search algorithm: ");
     int option;
     scanf("%i", &option);
+    getchar();
     --option;
 
     printf("Write a key to search: ");
     char key[192];
-    scanf("%s", &key);
+    fgets(key, 192, stdin);
+    key[strlen(key) - 1] = '\0';
 
-    const long size = 50;
+    Record record = search(prepared_data, key, option);
 
-    Record* records = malloc(sizeof(Record) * size);
-    for (int i = 0; i < size; ++i) {
-        records[i] = generate_record();
-    }
-
-    options[option].search(records);
-
-    print_table_head();
-    for (int i = 0; i < size; ++i) {
-        print_record_data(&records[i], i);
-    }
-
-    printf("Selected search algorithm and key: %s, %s", options[option].name, key);
-
-    free(records);
+    print_record_data(&record, -1);
+    printf("Selected search algorithm and key: %s, %s", options[option], key);
+    free_prepared_data(prepared_data);
     return 0;
 }
