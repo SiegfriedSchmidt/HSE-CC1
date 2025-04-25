@@ -18,7 +18,8 @@
 
 ## Результаты
 
-![Results](./results.png "results")
+![Results1](./results1.png "results1")
+![Results2](./results2.png "results2")
 
 [link](https://docs.google.com/document/d/1zz-OSMybNpbeRDmbUe23ZjUWaIxYF80ZIgBhTclus70/edit?tab=t.0)
 

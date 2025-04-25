@@ -23,7 +23,7 @@ def plot_sorting_performance(algorithms: dict):
 
         plt.plot(sizes, times, marker='o', label=algo_name, linewidth=2)
 
-    plt.title("Sorting Algorithm Performance Comparison", fontsize=14)
+    plt.title("Search Algorithm Performance Comparison", fontsize=14)
     plt.xlabel("Array Size", fontsize=12)
     plt.ylabel("Time (seconds)", fontsize=12)
     plt.grid(True, linestyle='--', alpha=0.7)
@@ -39,7 +39,9 @@ def plot_sorting_performance(algorithms: dict):
 def extract_results(results):
     algorithms = {}
     for result in results:
-        name = result.name.decode('utf-8') if result.name else "Unknown"
+        name = result.name.decode('utf-8') if result.name else ""
+        if not name:
+            continue
         size = result.size
         time = result.time
 

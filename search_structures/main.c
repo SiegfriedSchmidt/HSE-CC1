@@ -15,6 +15,7 @@ int main(void) {
     for (int i = 0; i < size; ++i) {
         print_record_data(&prepared_data.records[i], i);
     }
+    // tree_inorder_pass(prepared_data.root);
 
     printf("\n1 - linear_search\n2 - binary_search\n3 - red_black_search\nChoose search algorithm: ");
     int option;

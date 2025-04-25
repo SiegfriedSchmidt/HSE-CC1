@@ -21,7 +21,7 @@ void time_measure(Result results[]) {
         const PreparedData prepared_data = generate_prepared_data(sizes[size_idx]);
 
         for (int option = 0; option < OPTIONS_LEN; ++option) {
-            char *key = "123";
+            char *key = "Sorokina Maksim Igorevna";
 
             const clock_t start = clock();
             search(prepared_data, key, option);
