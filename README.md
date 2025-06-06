@@ -10,3 +10,4 @@
 7. [sorting](sorting)
 8. [linked_lists](linked_lists)
 9. [search_structures](search_structures)
+10. [hash_tables](hash_tables)
