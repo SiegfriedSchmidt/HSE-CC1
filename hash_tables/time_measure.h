@@ -7,6 +7,7 @@
 typedef struct Result {
     char name[64];
     long size;
+    long collisions;
     double time;
 } Result;
 

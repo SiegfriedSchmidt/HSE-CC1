@@ -13,5 +13,5 @@ hash_type hash_3(const char*);
 hash_type hash_4(const char*);
 
 hash_func_type get_hash_func(long option);
-extern const char* options[3];
+extern const char* options[4];
 #endif //HASH_FUNCTIONS_H

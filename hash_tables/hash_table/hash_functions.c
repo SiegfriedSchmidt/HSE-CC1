@@ -22,17 +22,37 @@ hash_type hash_1(const char* data) {
     return hash;
 }
 
-hash_type hash_2(const char* data)   {
-    unsigned long long a = 1, b = 0;
+// hash_type hash_1(const char* data) {
+//     hash_type hash = 0;
+//     while (*data) {
+//         hash ^= *data++;
+//     }
+//     return hash;
+// }
+
+
+hash_type hash_2(const char* data) {
+    unsigned long long hash = 0;
     char c;
 
     while ((c = *data++)) {
-        a = (a + c) % 65521;
-        b = (b + a) % 65521;
+        hash ^= c;
+        hash *= 0x5bd1e995;
+        hash ^= hash >> 15;
     }
 
-    return (b << 16) | a;
+    return hash;
 }
+
+// hash_type hash_2(const char* data) {
+//     hash_type hash = 2166136261u;
+//     while (*data) {
+//         hash ^= *data++;
+//         hash *= 16777619u;
+//     }
+//     return hash;
+// }
+
 
 hash_type hash_3(const char* data) {
     unsigned long long hash = 2166136261u; // FNV_offset_basis
@@ -45,6 +65,19 @@ hash_type hash_3(const char* data) {
 
     return hash;
 }
+//
+// hash_type hash_3(const char* data) {
+//     unsigned long long hash = 0;
+//     char c;
+//
+//     while ((c = *data++)) {
+//         hash += c;
+//         hash *= 0x5bd1e995;
+//     }
+//
+//     return hash;
+// }
+
 
 hash_type hash_4(const char* data) {
     return 1ull;

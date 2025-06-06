@@ -10,7 +10,7 @@ int main(void) {
     // srand(time(NULL));
     srand(3);
 
-    const long size = 50;
+    const long size = 1000000;
 
     Record** records = malloc(sizeof(Record*) * size);
     for (int i = 0; i < size; i++) {

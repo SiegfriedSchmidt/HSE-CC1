@@ -6,8 +6,12 @@
 
 ## Результаты
 
-[//]: # (![Results1]&#40;./results1.png "results1"&#41;)
+### Сравнение хорошей с плохими хэш функциями
+![Results1](python_plots/plots/result1.png "results1")
+![Results2](python_plots/plots/result2.png "results2")
 
-[//]: # (![Results2]&#40;./results2.png "results2"&#41;)
+### Сравнение хороших хэш функций
+![Results3](python_plots/plots/result3.png "results3")
+![Results4](python_plots/plots/result4.png "results4")
 
 [link](https://docs.google.com/document/d/1CMXbEZi36OqvZEDVKdba2B6E8C84AGzry2jvDVYcILc/edit?tab=t.0)
