@@ -13,14 +13,10 @@ set(SOURCE_FILES
         record.h
         display.c
         display.h
-        search/linear_search.c
-        search/linear_search.h
-        search/binary_search.c
-        search/binary_search.h
-        search/red_black_search.c
-        search/red_black_search.h
-        search/all_searches.c
-        search/all_searches.h
+        hash_table/hash_table.c
+        hash_table/hash_table.h
+        hash_table/hash_functions.c
+        hash_table/hash_functions.h
 )
 
 set(CMAKE_SHARED_LIBRARY_SUFFIX .so)

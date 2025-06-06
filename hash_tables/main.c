@@ -3,35 +3,56 @@
 #include <string.h>
 
 #include "display.h"
-#include "search/all_searches.h"
+#include "generate.h"
+#include "hash_table/hash_table.h"
 
 int main(void) {
     // srand(time(NULL));
     srand(3);
 
     const long size = 50;
-    PreparedData prepared_data = generate_prepared_data(size);
-    print_table_head();
-    for (int i = 0; i < size; ++i) {
-        print_record_data(&prepared_data.records[i], i);
-    }
-    // tree_inorder_pass(prepared_data.root);
 
-    printf("\n1 - linear_search\n2 - binary_search\n3 - red_black_search\nChoose search algorithm: ");
+    Record** records = malloc(sizeof(Record*) * size);
+    for (int i = 0; i < size; i++) {
+        records[i] = generate_record();
+    }
+
+    print_table_head();
+    // for (int i = 0; i < size; ++i) {
+    //     print_record_data(records[i], i);
+    // }
+
+    printf("\nhash_1, hash_2, hash_3, hash_4\nChoose hash function: ");
     int option;
     scanf("%i", &option);
     getchar();
     --option;
+
+    HashTable* hash_table = create_hash_table(size * 2, get_hash_func(option));
+    for (int i = 0; i < size; i++) {
+        hash_table_set(hash_table, records[i]->name, records[i]);
+    }
 
     printf("Write a key to search: ");
     char key[192];
     fgets(key, 192, stdin);
     key[strlen(key) - 1] = '\0';
 
-    Record record = search(prepared_data, key, option);
+    const Record* record = hash_table_get(hash_table, key);
+    printf("Selected hash function and key: %s, %s\n\n", options[option], key);
 
-    print_record_data(&record, -1);
-    printf("Selected search algorithm and key: %s, %s", options[option], key);
-    free_prepared_data(prepared_data);
+    printf("RECORD:\n");
+    if (record == NULL) {
+        printf("Key not found!\n");
+    } else {
+        print_record_data(record, -1);
+    }
+    printf("Collision: %ld\n", hash_table->collisions);
+
+    destroy_hash_table(hash_table);
+    for (int i = 0; i < size; i++) {
+        free(records[i]);
+    }
+    free(records);
     return 0;
 }

@@ -5,5 +5,5 @@
 #define GENERATE_H
 #include "record.h"
 
-Record generate_record();
+Record* generate_record();
 #endif //GENERATE_H

@@ -18,9 +18,9 @@ typedef struct Record {
     short int company;
 } Record;
 
-extern const char *first_names[48];
-extern const char *middle_names[48];
-extern const char *last_names[48];
+extern const char *first_names[158];
+extern const char *middle_names[148];
+extern const char *last_names[146];
 extern const char *specialties[7];
 
 typedef int (*cmp_type)(const Record *, const Record *);
