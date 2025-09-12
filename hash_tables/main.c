@@ -10,7 +10,7 @@ int main(void) {
     // srand(time(NULL));
     srand(3);
 
-    const long size = 1000000;
+    const long size = 100000;
 
     Record** records = malloc(sizeof(Record*) * size);
     for (int i = 0; i < size; i++) {
@@ -18,9 +18,9 @@ int main(void) {
     }
 
     print_table_head();
-    // for (int i = 0; i < size; ++i) {
-    //     print_record_data(records[i], i);
-    // }
+    for (int i = 0; i < size; ++i) {
+        print_record_data(records[i], i);
+    }
 
     printf("\nhash_1, hash_2, hash_3, hash_4\nChoose hash function: ");
     int option;
@@ -47,7 +47,7 @@ int main(void) {
     } else {
         print_record_data(record, -1);
     }
-    printf("Collision: %ld\n", hash_table->collisions);
+    printf("Collisions: %ld\n", hash_table->collisions);
 
     destroy_hash_table(hash_table);
     for (int i = 0; i < size; i++) {
